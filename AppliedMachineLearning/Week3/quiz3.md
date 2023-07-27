@@ -88,9 +88,9 @@ A precisão é a proporção de verdadeiros positivos em relação ao total de c
 $$
 \begin{align*}
 Precisão (Precision) &= \frac{TP}{(TP + FP)} \\
-Precisão (Precision) &= \frac{102}{(102 + 56)} \\
-Precisão (Precision) &= \frac{102}{158} \\
-Precisão (Precision) &≈ 0.646 \\
+Precisão (Precision) &= \frac{102}{(102 + 17)} \\
+Precisão (Precision) &= \frac{102}{119} \\
+Precisão (Precision) &≈ 0.857 \\
 \end{align*}
 $$
 
@@ -130,9 +130,9 @@ O recall é a proporção de verdadeiros positivos em relação ao total de caso
 $$
 \begin{align*}
 Recall &= \frac{TP}{(TP + FN)} \\
-Recall &= \frac{102}{(102 + 17)} \\
-Recall &= \frac{102}{119} \\
-Recall &≈ 0.857 \\
+Recall &= \frac{102}{(102 + 56)} \\
+Recall &= \frac{102}{158} \\
+Recall &≈ 0.646 \\
 \end{align*}
 $$
 
@@ -260,7 +260,7 @@ Conhecimento relacionado:
 
     ✅ A model that always predicts the mean of y would get a score of 0.0
 
-    ✅ The gihest possible score is 1.0
+    ✅ The highest possible score is 1.0
 
     ❎ The score can sometimes be negative.
 
@@ -299,6 +299,8 @@ Conhecimento relacionado:
 - F1
 - AUC
 
+**Solução**
+
 Se o objetivo é garantir que nenhuma pessoa inocente (que não está prestes a cometer um crime) seja presa, a métrica de avaliação mais relevante a ser maximizada é a "Recall" (Sensibilidade ou Taxa de Verdadeiros Positivos).
 
 O objetivo é minimizar o número de falsos negativos (pessoas prestes a cometer um crime, mas não identificadas pelo algoritmo) para garantir que nenhum inocente seja preso erroneamente.
@@ -322,6 +324,8 @@ Conhecimento relacionado:
 - F1
 - AUC
 
+**Solução**
+
 Se o objetivo é garantir que todos os criminosos (pessoas prestes a cometer um crime) sejam presos, a métrica de avaliação mais relevante a ser maximizada é a "Precision" (Precisão Positiva).
 
 O objetivo é minimizar o número de falsos positivos (pessoas não prestes a cometer um crime, mas identificadas como criminosos pelo algoritmo) para garantir que todos os criminosos sejam presos com precisão.
@@ -336,3 +340,176 @@ Conhecimento relacionado:
 
 - Avaliação de modelos de classificação: Compreensão das diferentes métricas de avaliação utilizadas para medir o desempenho de modelos de classificação, como Accuracy, Precision, Recall, F1 Score e AUC.
 - Precision e Recall: Compreender as diferenças e importância dessas métricas em cenários específicos, especialmente quando as consequências dos falsos positivos e falsos negativos são diferentes.
+
+12. A classifier is trained on imbalanced multiclass dataset, where there is one 'frequent' majority class that represents 80% of the labeled data, and ten rare classes that together represent the remaining 20% of 'infrequent' labels. After looking at the model's precision scores, you find that the micro-averaged precision is  much larger than the macro-averaged precision score. Which of the following is most likely happening?
+
+     * The model is probably misclassifying the frequent labels more than the infrequent labels.
+
+    * The model is probably misclassifying the infrequent labels more than the frequent labels.
+
+**Solução**
+
+Para determinar o que está acontecendo com as métricas de precisão micro e macro no cenário de um classificador treinado em um conjunto de dados multiclasse desequilibrado, precisamos entender os seguintes passos:
+
+- Micro-averaged precision: Calcula a precisão global considerando todas as previsões e verdadeiros positivos em todas as classes. Nesse caso, todos os erros e acertos em todas as classes são tratados como uma única grande classe.
+
+- Macro-averaged precision: Calcula a precisão média de todas as classes separadamente e, em seguida, tira a média dessas precisões. Cada classe tem o mesmo peso na média, independentemente do tamanho do grupo de dados.
+
+Compare as métricas de precisão:
+
+Se o micro-averaged precision é muito maior do que o macro-averaged precision, isso indica que o modelo está performando muito bem nas classes da maioria (frequent labels), mas está encontrando dificuldades em classificar corretamente as classes minoritárias (infrequent labels). O motivo é que a métrica micro-averaged dá muito mais peso às classes da maioria, já que essas classes têm mais exemplos e, portanto, um impacto maior na métrica geral.
+
+Resposta correta:
+
+The model is probably misclassifying the infrequent labels more than the frequent labels.
+
+Conhecimento relacionado:
+
+- Métricas de Avaliação para Problemas Multiclasse: Compreensão das métricas micro e macro-averaged precision, bem como outras métricas relevantes para avaliar o desempenho de classificadores em problemas com múltiplas classes e desequilibrados.
+- Desafios de Conjuntos de Dados Desbalanceados: Entendimento dos desafios de treinar modelos em conjuntos de dados com classes desbalanceadas e estratégias para lidar com esse problema.
+
+13. Using the already defined RBF SVC model `m`, run a grid search on the parameters C and gamma, for values [0.01, 0.1, 1, 10]. The grid search should find the model that best optimizes for recall. How much better is the recall of this model than the precision? (Computel recall - precision to 3 decimal places)
+
+(Use y_test and X_test to compute precision and recall.)
+
+```python
+print(m)
+```
+```
+SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, decision_function_shape=None, degree=3, gamma='auto', kernel='rbf', max_iter=-1, probability=False, random_state=0, shrinking=True, tol=0.001, verbose=False)
+```
+
+**Solução**
+
+Para executar uma busca em grade (grid search) nos parâmetros C e gamma para otimizar o modelo SVC (Support Vector Classifier) em relação à métrica de recall, precisamos:
+
+- Importar as bibliotecas necessárias e a função `SVC` do scikit-learn.
+
+- Definir os valores para os parâmetros C e gamma que serão testados na busca em grade.
+
+- Criar um dicionário de parâmetros contendo todas as combinações de valores para C e gamma que serão avaliadas na busca em grade.
+
+- Criar um objeto `GridSearchCV` com o modelo SVC, o dicionário de parâmetros e especificando a métrica de recall como a métrica a ser otimizada.
+
+- Ajustar o modelo `GridSearchCV`` aos dados de treinamento (X_train, y_train).
+
+- Obter os melhores parâmetros do modelo.
+
+- Calcular a precisão e recall do modelo usando os melhores parâmetros encontrados com os dados de teste (X_test, y_test).
+
+- Calcular a diferença entre o recall e a precisão.
+
+```python
+import numpy as np
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+from sklearn.metrics import precision_score, recall_score
+
+# Definir os valores para os parâmetros C e gamma
+param_grid = {'C': [0.01, 0.1, 1, 10], 'gamma': [0.01, 0.1, 1, 10]}
+
+# Criar o modelo SVC
+svc = SVC(kernel='rbf', random_state=0)
+
+# Criar o objeto GridSearchCV
+grid_search = GridSearchCV(svc, param_grid, scoring='recall')
+
+# Ajustar o modelo GridSearchCV aos dados de treinamento
+grid_search.fit(X_train, y_train)
+
+# Obter os melhores parâmetros do modelo
+best_params = grid_search.best_params_
+
+# Calcular a precisão e recall com os melhores parâmetros usando os dados de teste
+y_pred = grid_search.predict(X_test)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+
+# Calcular a diferença entre recall e precisão
+recall_minus_precision = recall - precision
+
+print("Best parameters:", best_params)
+print("Precision:", precision)
+print("Recall:", recall)
+print("Recall - Precision:", round(recall_minus_precision, 3))
+```
+
+Conhecimento relacionado:
+
+- Grid Search: Compreender o conceito de busca em grade para encontrar os melhores hiperparâmetros de um modelo de aprendizado de máquina.
+- Métricas de Avaliação: Compreender as métricas de precisão e recall como formas de avaliar o desempenho de modelos de classificação em conjuntos de dados desequilibrados.
+- Support Vector Classifier (SVC): Familiarizar-se com o modelo SVC e seus parâmetros, como C e gamma, que podem ser ajustados para melhorar o desempenho do modelo.
+
+14. Using the already defined RBF SVC model `m`, run a grid search on the parameters C and gamma, for values [0.01, 0.1, 1, 10]. The grid search should find the model that best optimizes for precision. How much better is the precision of this model than the recall? (Compute precision - recall to 3 decimal places)
+
+(Use y_test and X_test to compute precision and recall.)
+
+```python
+print(m)
+```
+```
+SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0, decision_function_shape=None, degree=3, gamma='auto', kernel='rbf', max_iter=-1, probability=False, random_state=0, shrinking=True, tol=0.001, verbose=False)
+```
+
+**Solução**
+
+Para executar uma busca em grade (grid search) nos parâmetros C e gamma para otimizar o modelo SVC (Support Vector Classifier) em relação à métrica de precisão, siga estes passos:
+
+Passo a passo para realizar a busca em grade:
+
+Importar as bibliotecas necessárias e a função SVC do scikit-learn.
+
+Definir os valores para os parâmetros C e gamma que serão testados na busca em grade.
+
+Criar um dicionário de parâmetros contendo todas as combinações de valores para C e gamma que serão avaliadas na busca em grade.
+
+Criar um objeto GridSearchCV com o modelo SVC, o dicionário de parâmetros e especificando a métrica de precisão como a métrica a ser otimizada.
+
+Ajustar o modelo GridSearchCV aos dados de treinamento (X_train, y_train).
+
+Obter os melhores parâmetros do modelo.
+
+Calcular a precisão e recall do modelo usando os melhores parâmetros encontrados com os dados de teste (X_test, y_test).
+
+Calcular a diferença entre a precisão e o recall.
+
+```python
+import numpy as np
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+from sklearn.metrics import precision_score, recall_score
+
+# Passo 2: Definir os valores para os parâmetros C e gamma
+param_grid = {'C': [0.01, 0.1, 1, 10], 'gamma': [0.01, 0.1, 1, 10]}
+
+# Passo 3: Criar o modelo SVC
+svc = SVC(kernel='rbf', random_state=0)
+
+# Passo 4: Criar o objeto GridSearchCV
+grid_search = GridSearchCV(svc, param_grid, scoring='precision')
+
+# Passo 5: Ajustar o modelo GridSearchCV aos dados de treinamento
+grid_search.fit(X_train, y_train)
+
+# Passo 6: Obter os melhores parâmetros do modelo
+best_params = grid_search.best_params_
+
+# Passo 7: Calcular a precisão e recall com os melhores parâmetros usando os dados de teste
+y_pred = grid_search.predict(X_test)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+
+# Passo 8: Calcular a diferença entre a precisão e o recall
+precision_minus_recall = precision - recall
+
+print("Best parameters:", best_params)
+print("Precision:", precision)
+print("Recall:", recall)
+print("Precision - Recall:", round(precision_minus_recall, 3))
+```
+
+Conhecimento relacionado:
+
+- Grid Search: Compreender o conceito de busca em grade para encontrar os melhores hiperparâmetros de um modelo de aprendizado de máquina.
+- Métricas de Avaliação: Compreender as métricas de precisão e recall como formas de avaliar o desempenho de modelos de classificação em conjuntos de dados desequilibrados.
+- Support Vector Classifier (SVC): Familiarizar-se com o modelo SVC e seus parâmetros, como C e gamma, que podem ser ajustados para melhorar o desempenho do modelo.
