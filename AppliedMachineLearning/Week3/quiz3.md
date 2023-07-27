@@ -1,6 +1,6 @@
 # Module 3 Quiz
 
-1. A supervised learning model has been built to predict whether someone is infected with a new strain of a virus. The probability of any one person having the virus is 5%. Using accuracy as a metric, what would be a good choice for a baseline accuracy score that the new model would want to otperform?
+1. A supervised learning model has been built to predict whether someone is infected with a new strain of a virus. The probability of any one person having the virus is 5%. Using accuracy as a metric, what would be a good choice for a baseline accuracy score that the new model would want to outperform?
 
 **Solução:**
 
@@ -262,7 +262,7 @@ Conhecimento relacionado:
 
     ✅ The highest possible score is 1.0
 
-    ❎ The score can sometimes be negative.
+    ✅ The score can sometimes be negative.
 
     ❎ A model that always predicts the mean of y would get a score of 0.5
 
@@ -280,7 +280,7 @@ O R-squared é uma métrica comum para avaliar o desempenho de modelos de regres
 
 - The score can sometimes be negative:
 
-    Isso é falso. O R-squared não pode ser negativo. Ele pode variar de 0.0 a 1.0, mas nunca será um valor negativo.
+    Isso é verdadeiro. Embora o R-squared geralmente varie de 0.0 a 1.0, em casos de modelos de regressão com desempenho muito ruim, ele pode ser negativo. Isso pode acontecer quando o modelo é pior do que simplesmente usar a média dos valores de y como previsão.
 
 - A model that always predicts the mean of y would get a score of 0.5:
     
@@ -301,15 +301,15 @@ Conhecimento relacionado:
 
 **Solução**
 
-Se o objetivo é garantir que nenhuma pessoa inocente (que não está prestes a cometer um crime) seja presa, a métrica de avaliação mais relevante a ser maximizada é a "Recall" (Sensibilidade ou Taxa de Verdadeiros Positivos).
+Se o objetivo é garantir que todos os criminosos (pessoas prestes a cometer um crime) sejam presos, a métrica de avaliação mais relevante a ser maximizada é a "Precision" (Precisão Positiva).
 
-O objetivo é minimizar o número de falsos negativos (pessoas prestes a cometer um crime, mas não identificadas pelo algoritmo) para garantir que nenhum inocente seja preso erroneamente.
+O objetivo é minimizar o número de falsos positivos (pessoas não prestes a cometer um crime, mas identificadas como criminosos pelo algoritmo) para garantir que todos os criminosos sejam presos com precisão.
 
-O Recall é a proporção de casos positivos corretamente identificados em relação ao número total de casos positivos reais. No contexto desse algoritmo de vigilância, o recall mede a capacidade do modelo de detectar com precisão os casos de crimes antes que ocorram, ou seja, identificar com sucesso as pessoas que estão prestes a cometer um crime.
+A Precision é a proporção de casos positivos corretamente previstos em relação ao número total de previsões positivas do modelo. No contexto desse algoritmo de vigilância, a precisão mede a capacidade do modelo de fazer previsões corretas sobre quem está prestes a cometer um crime, ou seja, identificar corretamente os criminosos.
 
-Neste cenário, um falso negativo representaria uma pessoa prestes a cometer um crime que não foi detectada pelo algoritmo de vigilância. Isso pode levar a consequências graves, pois um criminoso pode escapar da vigilância e cometer um crime real. Portanto, é essencial minimizar os falsos negativos, o que significa maximizar o Recall.
+Neste cenário, um falso positivo representaria uma pessoa que não está prestes a cometer um crime, mas foi erroneamente identificada pelo algoritmo como criminosa. Isso pode levar à prisão injusta de pessoas inocentes. Portanto, é essencial minimizar os falsos positivos, o que significa maximizar a Precision.
 
-Outras métricas como a "Precision", "F1 Score" ou "AUC" podem ser úteis para avaliar o desempenho geral do modelo, mas se o objetivo principal é garantir que nenhuma pessoa inocente seja presa erroneamente, o Recall é a métrica mais relevante e deve ser maximizado.
+Outras métricas como a "Recall", "F1 Score" ou "AUC" podem ser úteis para avaliar o desempenho geral do modelo, mas se o objetivo principal é garantir que todos os criminosos sejam presos com precisão, a Precision é a métrica mais relevante e deve ser maximizada.
 
 Conhecimento relacionado:
 
@@ -326,15 +326,15 @@ Conhecimento relacionado:
 
 **Solução**
 
-Se o objetivo é garantir que todos os criminosos (pessoas prestes a cometer um crime) sejam presos, a métrica de avaliação mais relevante a ser maximizada é a "Precision" (Precisão Positiva).
+Se o objetivo é garantir que nenhuma pessoa inocente (que não está prestes a cometer um crime) seja presa, a métrica de avaliação mais relevante a ser maximizada é a "Recall" (Sensibilidade ou Taxa de Verdadeiros Positivos).
 
-O objetivo é minimizar o número de falsos positivos (pessoas não prestes a cometer um crime, mas identificadas como criminosos pelo algoritmo) para garantir que todos os criminosos sejam presos com precisão.
+O objetivo é minimizar o número de falsos negativos (pessoas prestes a cometer um crime, mas não identificadas pelo algoritmo) para garantir que nenhum inocente seja preso erroneamente.
 
-A Precision é a proporção de casos positivos corretamente previstos em relação ao número total de previsões positivas do modelo. No contexto desse algoritmo de vigilância, a precisão mede a capacidade do modelo de fazer previsões corretas sobre quem está prestes a cometer um crime, ou seja, identificar corretamente os criminosos.
+O Recall é a proporção de casos positivos corretamente identificados em relação ao número total de casos positivos reais. No contexto desse algoritmo de vigilância, o recall mede a capacidade do modelo de detectar com precisão os casos de crimes antes que ocorram, ou seja, identificar com sucesso as pessoas que estão prestes a cometer um crime.
 
-Neste cenário, um falso positivo representaria uma pessoa que não está prestes a cometer um crime, mas foi erroneamente identificada pelo algoritmo como criminosa. Isso pode levar à prisão injusta de pessoas inocentes. Portanto, é essencial minimizar os falsos positivos, o que significa maximizar a Precision.
+Neste cenário, um falso negativo representaria uma pessoa prestes a cometer um crime que não foi detectada pelo algoritmo de vigilância. Isso pode levar a consequências graves, pois um criminoso pode escapar da vigilância e cometer um crime real. Portanto, é essencial minimizar os falsos negativos, o que significa maximizar o Recall.
 
-Outras métricas como a "Recall", "F1 Score" ou "AUC" podem ser úteis para avaliar o desempenho geral do modelo, mas se o objetivo principal é garantir que todos os criminosos sejam presos com precisão, a Precision é a métrica mais relevante e deve ser maximizada.
+Outras métricas como a "Precision", "F1 Score" ou "AUC" podem ser úteis para avaliar o desempenho geral do modelo, mas se o objetivo principal é garantir que nenhuma pessoa inocente seja presa erroneamente, o Recall é a métrica mais relevante e deve ser maximizado.
 
 Conhecimento relacionado:
 
@@ -474,32 +474,27 @@ Calcular a precisão e recall do modelo usando os melhores parâmetros encontrad
 Calcular a diferença entre a precisão e o recall.
 
 ```python
-import numpy as np
-from sklearn.model_selection import GridSearchCV
-from sklearn.svm import SVC
-from sklearn.metrics import precision_score, recall_score
-
-# Passo 2: Definir os valores para os parâmetros C e gamma
+# Definir os valores para os parâmetros C e gamma
 param_grid = {'C': [0.01, 0.1, 1, 10], 'gamma': [0.01, 0.1, 1, 10]}
 
-# Passo 3: Criar o modelo SVC
+# Criar o modelo SVC
 svc = SVC(kernel='rbf', random_state=0)
 
-# Passo 4: Criar o objeto GridSearchCV
+# Criar o objeto GridSearchCV
 grid_search = GridSearchCV(svc, param_grid, scoring='precision')
 
-# Passo 5: Ajustar o modelo GridSearchCV aos dados de treinamento
+# Ajustar o modelo GridSearchCV aos dados de treinamento
 grid_search.fit(X_train, y_train)
 
-# Passo 6: Obter os melhores parâmetros do modelo
+# Obter os melhores parâmetros do modelo
 best_params = grid_search.best_params_
 
-# Passo 7: Calcular a precisão e recall com os melhores parâmetros usando os dados de teste
+# Calcular a precisão e recall com os melhores parâmetros usando os dados de teste
 y_pred = grid_search.predict(X_test)
 precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
 
-# Passo 8: Calcular a diferença entre a precisão e o recall
+# Calcular a diferença entre a precisão e o recall
 precision_minus_recall = precision - recall
 
 print("Best parameters:", best_params)
