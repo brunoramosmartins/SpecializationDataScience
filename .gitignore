@@ -1,1 +1,6 @@
 *.csv
+*.pickle
+*.bib
+*.tab
+/AppliedTextMining/Week2/assets/
+
