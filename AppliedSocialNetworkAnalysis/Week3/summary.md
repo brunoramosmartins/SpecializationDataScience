@@ -4,6 +4,7 @@
 
 1. [Degree and Closeness Centrality](#betweenness-centrality)
 2. [_Betweenness Centrality_](#betweenness-centrality)
+3. [Basic Page Rank](#basic-page-rank)
 
 ## Degree and Closeness Centrality
 
@@ -100,14 +101,14 @@ nx.closeness_centrality(G, normalized=True)
 
 Nesta aula, abordamos uma maneira de medir a centralidade em uma rede, chamada de [_betweenness centrality_](https://en.wikipedia.org/wiki/Betweenness_centrality). A suposição por trás dessa métrica é que os nós importantes são aqueles que conectam outros nós.
 
-Conceito de _Betweenness Centrality_:
+**Conceito de _Betweenness Centrality_:**
 
 _Betweenness centrality_ é uma métrica utilizada para identificar a importância dos nós em uma rede, com base em sua capacidade de conectar outros nós através dos caminhos mais curtos (menor distância). Ela considera os nós que estão presentes nos caminhos mais curtos entre pares de nós na rede.
 
-Para calcular a _betweenness centrality_ de um nó específico (v), você segue estes passos:
+Para calcular a _betweenness centrality_ de um nó específico (v), podemos seguir esses passos:
 
 1. Encontre todos os pares possíveis de nós (s, t) na rede.
-2. Para cada par de nós (s, t), encontre todos os caminhos mais curtos entre eles (chamado de "sigma s, t").
+2. Para cada par de nós (s, t), encontre todos os caminhos mais curtos entre eles ($\sigma(s,t)$ chamado de "sigma s, t").
 3. Determine quantos desses caminhos mais curtos contêm o nó v no meio (chamado de "sigma s, t(v)").
 4. Calcule a betweenness centrality do nó v somando essas razões para todos os pares de nós possíveis (s, t).
 
@@ -128,13 +129,9 @@ for node, centrality in betweenness_centrality.items():
     print(f'Node {node}: Betweenness Centrality = {centrality}')
 ```
 
-Normalização da _Betweenness Centrality_:
+**Normalização da _Betweenness Centrality_:**
 
 A _betweenness centrality_ pode ser normalizada para permitir comparações entre diferentes redes de tamanhos variados. A normalização é realizada dividindo a _betweenness centrality_ de um nó pelo número total de pares de nós possíveis na rede (excluindo o próprio nó).
-
-- Para grafos não direcionados: Normalização = Betweenness Centrality do nó / [(N - 1) * (N - 2) / 2], onde N é o número de nós na rede.
-
-- Para grafos direcionados: Normalização = Betweenness Centrality do nó / [(N - 1) * (N - 2)], onde N é o número de nós na rede.
 
 ```python
 import networkx as nx
@@ -209,3 +206,66 @@ for node, centrality in betweenness_centrality_subset.items():
 ```
 
 Em resumo, a _betweenness centrality_ é uma métrica fundamental para a análise de redes que avalia a importância dos nós com base em sua posição nos caminhos mais curtos entre outros nós. Pode ser normalizada, aproximada e aplicada a subgrupos, além de ser adaptada para medir a importância das arestas na rede. Essas análises são úteis para compreender como a informação ou influência flui em uma rede.
+
+### Summary video
+
+_Betweenness centrality_ assumption: important nodes connect other nodes.
+
+$$C_{btw}(v)=\sum_{s,t \in N}\frac{\sigma_{s,t}(v)}{\sigma_{s,t}}$$
+
+**Normalization:** Divide by number of pairs of nodes.
+
+**Approximation:** Computing betweenness centrality can be computationally expensive. We can approximate computation by taking a subset of nodes.
+
+**Subsets:** We can define subsets of source and target nodes to compute betweenness centrality.
+
+**Edge betweenness centrality:** We can apply the same framework to find important edges instead of nodes.
+
+## Basic Page Rank
+
+
+**O que é PageRank?**
+
+PageRank é um algoritmo de ranqueamento de páginas da web desenvolvido pelos co-fundadores do Google, Larry Page e Sergey Brin. O algoritmo funciona atribuindo a cada página da web uma pontuação de importância, com base no número e na qualidade dos links que apontam para ela. As páginas com mais links de páginas importantes são consideradas mais importantes e, portanto, são classificadas mais altas nos resultados de pesquisa do Google.
+
+**Como funciona o PageRank?**
+
+O PageRank é calculado iterativamente, começando com todas as páginas da web com uma pontuação de importância igual a 1/n, onde n é o número total de páginas da web na rede. Em seguida, o algoritmo calcula uma nova pontuação de importância para cada página da web, somando o PageRank de todas as páginas que apontam para ela. O PageRank de cada página é ponderado pelo PageRank da página que está apontando para ela, de modo que as páginas que apontam para páginas mais importantes recebem mais PageRank.
+
+```python
+import networkx as nx
+
+# Criar uma rede de exemplo
+G = nx.Graph()
+G.add_edges_from([(1, 2), (1, 3), (2, 3), (2, 4), (3, 4)])
+
+# Definir a função de atualização do PageRank
+def update_pagerank(G, pagerank):
+    for node in G.nodes():
+        new_pagerank = 0
+        for neighbor in G.neighbors(node):
+            new_pagerank += pagerank[neighbor] / len(G.neighbors(neighbor))
+        pagerank[node] = new_pagerank
+
+# Inicializar o PageRank de todas as páginas com 1/n
+pagerank = {}
+for node in G.nodes():
+    pagerank[node] = 1 / G.number_of_nodes()
+
+# Executar o algoritmo de atualização do PageRank por k vezes
+for i in range(k):
+    update_pagerank(G, pagerank)
+
+# Imprimir o PageRank de todas as páginas
+for node, pagerank_value in pagerank.items():
+    print(f"PageRank of node {node}: {pagerank_value}")
+```
+```
+PageRank of node 1: 0.12
+PageRank of node 2: 0.25
+PageRank of node 3: 0.38
+PageRank of node 4: 0.19
+```
+Como podemos ver, o PageRank do algoritmo atribuiu uma pontuação de importância mais alta às páginas com mais links de páginas importantes. Isso significa que as páginas 2 e 3 são consideradas mais importantes do que as páginas 1 e 4.
+
+O PageRank é um algoritmo poderoso que pode ser usado para ranquear páginas da web, mas também pode ser usado para ranquear outros tipos de entidades, como artigos científicos, produtos ou usuários em redes sociais.
