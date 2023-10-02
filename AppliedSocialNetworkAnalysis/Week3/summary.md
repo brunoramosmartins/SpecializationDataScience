@@ -226,7 +226,7 @@ $$C_{btw}(v)=\sum_{s,t \in N}\frac{\sigma_{s,t}(v)}{\sigma_{s,t}}$$
 
 **O que é PageRank?**
 
-PageRank é um algoritmo de ranqueamento de páginas da web desenvolvido pelos co-fundadores do Google, Larry Page e Sergey Brin. O algoritmo funciona atribuindo a cada página da web uma pontuação de importância, com base no número e na qualidade dos links que apontam para ela. As páginas com mais links de páginas importantes são consideradas mais importantes e, portanto, são classificadas mais altas nos resultados de pesquisa do Google.
+[PageRank](https://en.wikipedia.org/wiki/PageRank) é um algoritmo de ranqueamento de páginas da web desenvolvido pelos co-fundadores do Google, Larry Page e Sergey Brin. O algoritmo funciona atribuindo a cada página da web uma pontuação de importância, com base no número e na qualidade dos links que apontam para ela. As páginas com mais links de páginas importantes são consideradas mais importantes e, portanto, são classificadas mais altas nos resultados de pesquisa do Google.
 
 **Como funciona o PageRank?**
 
@@ -269,3 +269,14 @@ PageRank of node 4: 0.19
 Como podemos ver, o PageRank do algoritmo atribuiu uma pontuação de importância mais alta às páginas com mais links de páginas importantes. Isso significa que as páginas 2 e 3 são consideradas mais importantes do que as páginas 1 e 4.
 
 O PageRank é um algoritmo poderoso que pode ser usado para ranquear páginas da web, mas também pode ser usado para ranquear outros tipos de entidades, como artigos científicos, produtos ou usuários em redes sociais.
+
+### Summary video
+
+Steps os Basic PageRank:
+
+1. All nodes start with PageRank of 1/n;
+2. Perform the Basic PageRank Update Rule k times:
+    - **Basic PageRank Update Rule:** Each node gives an equal share of its current PageRank to all the nodes it links to.
+    - The new PageRank of each node is the sum of all the PageRank it received from other nodes.
+
+For most networks, PageRank values converge as k gets larger ($k \rightarrow \infty$)
