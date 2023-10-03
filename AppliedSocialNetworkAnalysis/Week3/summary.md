@@ -5,6 +5,7 @@
 1. [Degree and Closeness Centrality](#betweenness-centrality)
 2. [_Betweenness Centrality_](#betweenness-centrality)
 3. [Basic Page Rank](#basic-page-rank)
+4. [Scaled Page Rank](#scaled-page-rank)
 
 ## Degree and Closeness Centrality
 
@@ -280,3 +281,50 @@ Steps os Basic PageRank:
     - The new PageRank of each node is the sum of all the PageRank it received from other nodes.
 
 For most networks, PageRank values converge as k gets larger ($k \rightarrow \infty$)
+
+## Scaled Page Rank
+
+O valor de PageRank de um nó em uma rede pode ser interpretado como a probabilidade de um caminhante aleatório pousar nesse nó após dar muitos passos. Para algumas redes, alguns nós podem "sugar" todo o PageRank de todos os outros nós na rede. Isso ocorre porque um caminhante aleatório em uma rede assim é provável que fique preso nesses nós de alto PageRank e nunca saia.
+
+**Algoritmo PageRank escalado**
+
+O algoritmo PageRank escalado introduz um novo parâmetro chamado parâmetro de amortecimento alfa. Com probabilidade alfa, o caminhante aleatório segue as arestas de saída aleatoriamente. Com probabilidade 1-alfa, o caminhante aleatório escolhe um nó completamente aleatoriamente e pula para ele. Isso significa que o caminhante aleatório não está mais preso em nós de alto PageRank, porque tem alguma probabilidade de pular aleatoriamente para outros nós na rede
+
+Como calcular PageRank escalado no NetworkX
+
+Para calcular o PageRank escalado de uma rede com parâmetro de amortecimento alfa no NetworkX, você pode usar a seguinte função:
+
+```python
+import networkx as nx
+
+G = nx.Graph()
+# Adicione nós e arestas ao G
+
+alpha = 0,8
+pagerank = nx.pagerank(G, alpha=alpha)
+```
+O seguinte exemplo mostra como calcular o PageRank escalado da rede mostrada na aula em vídeo, com um parâmetro de amortecimento de 0,8:
+
+```python
+import networkx as nx
+
+G = nx.Graph()
+G.add_nodes_from(["A", "B", "C", "D", "E", "F", "G"])
+G.add_edges_from([("A", "B"), ("B", "F"), ("B", "G"), ("F", "G")])
+
+alpha = 0,8
+pagerank = nx.pagerank(G, alpha=alpha)
+
+print(pagerank)
+```
+Saída:
+
+```
+{'A': 0,02, 'B': 0,38, 'C': 0,14, 'D': 0,14, 'E': 0,02, 'F': 0,2, 'G': 0,2}
+```
+
+Como você pode ver, os valores de PageRank escalado estão mais distribuídos do que os valores de PageRank básico. Isso ocorre porque o parâmetro de amortecimento impede que o caminhante aleatório fique preso nos nós de alto PageRank.
+
+Conclusão
+
+A interpretação do PageRank como um passeio aleatório é útil porque revela um problema com o PageRank básico: alguns nós podem absorver todo o PageRank da rede. O algoritmo PageRank escalado resolve esse problema introduzindo o parâmetro de amortecimento alfa.
